@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피자 재료</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>피자 재료</h1>
+    <div style="width: 300px;">
+        <canvas id="pieChart"></canvas>
+    </div>
+    <script>
+        // Fetch data from pie.php
+        fetch("pie.php")
+            .then(response => response.json())
+            .then(data => {
+                // Prepare the data for the chart
+                const chartData = {
+                    labels: ['치즈', '올리브', '페퍼로니', '양파', '소스'],
+                    datasets: [{
+                        data: [
+                            data[0].cheese,
+                            data[0].olive,
+                            data[0].pepperoni,
+                            data[0].onion,
+                            data[0].sauce
+                        ],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ]
+                    }]
+                };
+
+                // Create the chart
+                const ctx = document.getElementById('pieChart').getContext('2d');
+                const pieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        aspectRatio: 1
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
